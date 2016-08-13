@@ -1,0 +1,64 @@
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'music/style.css' %}" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+<link href='https://fonts.googleapis.com/css?family=Indie+Flower' rel='stylesheet' type='text/css' />
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+
+        <!--header-->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#topNavBar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{% url 'music:index' %}">MKK</a>
+        </div>
+
+        <!--items-->
+        <div class="collapse navbar-collapse" id="topNavBar">
+
+            <ul class="nav navbar-nav">
+                <li class="active">
+                    <a href="{% url 'music:index' %}">
+                        <span class="glyphicon glyphicon-cd" aria-hidden="true"></span>&nbsp; Albums
+                    </a>
+                </li>
+                <li class="">
+                    <a href="{% url 'music:index' %}">
+                        <span class="glyphicon glyphicon-music" aria-hidden="true"></span>&nbsp; Songs
+                    </a>
+                </li>
+            </ul>
+
+            <form class="navbar-form navbar-left" role="search" method="get" action="#">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="q" value="Search Here!"/>
+                </div>
+                <button type="submit" class="btn btn-default">Search</button>
+            </form>
+
+
+        </div>
+
+    </div>
+</nav>
+
+
+{% if all_albums %}
+    <h1> HI! </h1>
+    <h2>Here are all my albums!!! <br></h2>
+    <ul>
+        {% for album in all_albums %}
+        <!--<li><a href="/music/{{ album.id }}">{{ album.album_title }}</a></li>-->  <!--hardcoded url (i.e. /music/)-->
+        <li><a href="{% url 'music:detail' album.id %}">{{ album.album_title }}</a></li>         <!--dynamic url (i.e. album.id)-->
+        {% endfor %}
+    </ul>
+
+{% else %}
+    <h2> No album to display, sorry! </h2>
+{% endif %}
